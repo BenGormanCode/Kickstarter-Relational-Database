@@ -1,11 +1,12 @@
 -- Drop Users
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS projects;
 DROP TABLE IF EXISTS creators;
 DROP TABLE IF EXISTS pledges;
-DROP TABLE IF EXISTS projects;
 DROP TABLE IF EXISTS project_goals;
 DROP TABLE IF EXISTS goals;
-DROP TABLE IF EXISTS categories;
+
 
 -- Created Tables
 CREATE TABLE users (
@@ -28,11 +29,13 @@ CREATE TABLE projects (
   FOREIGN KEY(categories_id) REFERENCES categories(id)
 );
 
--- CREATE TABLE creators (
---   id SERIAL PRIMARY KEY,
---   FOREIGN KEY(user_id) REFERENCES users(id),
---   FOREIGN KEY(project_id) REFERENCES project.id
--- );
+CREATE TABLE creators (
+  id SERIAL PRIMARY KEY,
+  user_id integer,
+  project_id integer,
+  FOREIGN KEY(user_id) REFERENCES users(id),
+  FOREIGN KEY(project_id) REFERENCES projects(id)
+);
 
 CREATE TABLE pledges (
   id SERIAL PRIMARY KEY,
@@ -115,6 +118,18 @@ INSERT INTO projects (title, categories_id) VALUES
 ('Handcrafted Wooden Jewelry Boxes', 3),
 ('Artisan Food Market Pop-Up', 8);
 
+INSERT INTO creators (user_id, project_id) VALUES
+(4, 1),
+(3, 2),
+(10, 3),
+(9, 4),
+(2, 5),
+(7, 6),
+(8, 7),
+(6, 8),
+(5, 9),
+(1, 10);
+
 INSERT INTO pledges (user_id, project_id, amount) VALUES
 (12, 1, 10000),
 (18, 1, 15000),
@@ -158,15 +173,13 @@ INSERT INTO pledges (user_id, project_id, amount) VALUES
 (12, 10, 2500),
 (22, 10, 1000);
 
--- INSERT INTO creators;
 -- INSERT INTO project_goals;
 -- INSERT INTO goals;
 
 
-
 -- View Data
 SELECT * FROM users;
--- SELECT * FROM creators;
+SELECT * FROM creators;
 SELECT * FROM pledges;
 SELECT * FROM projects;
 -- SELECT * FROM project_goals;
