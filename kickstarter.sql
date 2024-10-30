@@ -42,3 +42,12 @@ CREATE TABLE goals {
   goal_amount integer(10)
 }
 
+
+
+SELECT * FROM users;
+SELECT * FROM creators;
+SELECT * FROM pledges;
+SELECT * FROM projects;
+SELECT * FROM categories;
+SELECT * FROM project_goals;
+SELECT * FROM goals;
