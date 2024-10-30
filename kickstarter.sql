@@ -1,12 +1,11 @@
 -- Drop Users
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS categories;
-DROP TABLE IF EXISTS projects;
-DROP TABLE IF EXISTS creators;
-DROP TABLE IF EXISTS pledges;
-DROP TABLE IF EXISTS project_goals;
 DROP TABLE IF EXISTS goals;
-
+DROP TABLE IF EXISTS project_goals;
+DROP TABLE IF EXISTS pledges;
+DROP TABLE IF EXISTS creators;
+DROP TABLE IF EXISTS projects;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS users;
 
 -- Created Tables
 CREATE TABLE users (
@@ -26,39 +25,39 @@ CREATE TABLE projects (
   id SERIAL PRIMARY KEY,
   title varchar(100),
   categories_id integer,
-  FOREIGN KEY(categories_id) REFERENCES categories(id)
+  FOREIGN KEY(categories_id) REFERENCES categories(id) ON DELETE CASCADE
 );
 
 CREATE TABLE creators (
   id SERIAL PRIMARY KEY,
   user_id integer,
   project_id integer,
-  FOREIGN KEY(user_id) REFERENCES users(id),
-  FOREIGN KEY(project_id) REFERENCES projects(id)
+  FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY(project_id) REFERENCES projects(id) ON DELETE CASCADE
 );
 
 CREATE TABLE pledges (
   id SERIAL PRIMARY KEY,
   user_id integer,
   project_id integer,
-  FOREIGN KEY(user_id) REFERENCES users(id),
-  FOREIGN KEY(project_id) REFERENCES projects(id),
+  FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY(project_id) REFERENCES projects(id) ON DELETE CASCADE,
   amount integer
 );
 
+CREATE TABLE goals (
+  id SERIAL PRIMARY KEY,
+  goal_name varchar(100), 
+  goal_amount integer
+);
 
-
--- CREATE TABLE project_goals (
--- id SERIAL PRIMARY KEY,
--- FOREIGN KEY(project_id) REFERENCES projects(id),
--- FOREIGN KEY(goals_id) REFERENCES goals(id)
--- );
-
--- CREATE TABLE goals (
---   id SERIAL PRIMARY KEY,
---   goal_name varchar(100), 
---   goal_amount integer(10)
--- );
+CREATE TABLE project_goals (
+id SERIAL PRIMARY KEY,
+project_id integer,
+goals_id integer,
+FOREIGN KEY(project_id) REFERENCES projects(id) ON DELETE CASCADE,
+FOREIGN KEY(goals_id) REFERENCES goals(id) ON DELETE CASCADE
+);
 
 -- Table Data
 INSERT INTO users (username, email, phone) VALUES 
@@ -173,18 +172,38 @@ INSERT INTO pledges (user_id, project_id, amount) VALUES
 (12, 10, 2500),
 (22, 10, 1000);
 
--- INSERT INTO project_goals;
--- INSERT INTO goals;
+INSERT INTO project_goals (project_id, goals_id) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 8),
+(9, 9),
+(10, 10);
 
+INSERT INTO goals (goal_name, goal_amount) VALUES
+('Fashion Line Funding', 30000),
+('Board Game Beta', 18000),
+('Collecting for Collection', 25000),
+('Book One', 20000),
+('Film Budget', 50000),
+('First Shoot', 12000),
+('Art Supply Kit', 15000),
+('Wildlife Series', 22000),
+('Basic Boxes', 8000),
+('Pop Up Market', 10000);
 
 -- View Data
-SELECT * FROM users;
-SELECT * FROM creators;
-SELECT * FROM pledges;
-SELECT * FROM projects;
+-- SELECT * FROM users;
+-- SELECT * FROM creators;
+-- SELECT * FROM pledges;
+-- SELECT * FROM projects;
 -- SELECT * FROM project_goals;
 -- SELECT * FROM goals;
-SELECT * FROM categories;
+-- SELECT * FROM categories;
 
 
 -- 3 well written complex queries that involve selecting, filtering, grouping and ordering

@@ -187,8 +187,8 @@ Rachel Smith: $4,000
 Victor Wong: $5,000
 Sam Taylor: $9,000
 Total Raised: $21,000/$12,000 (Goal Met)
-Project: "Eco-Friendly Art Supplies Kit"
 
+Project: "Eco-Friendly Art Supplies Kit"
 Creator: Harry Ives
 Category: Craft
 Goal: $15,000
@@ -199,8 +199,8 @@ Yara Zimmer: $3,500
 Ursula Vasquez: $2,000
 Mia Nelson: $4,500
 Total Raised: $19,500/$15,000 (Goal Met)
-Project: "Photojournalism Series: Urban Wildlife"
 
+Project: "Photojournalism Series: Urban Wildlife"
 Creator: Frank Green
 Category: Journalism
 Goal: $22,000
@@ -209,8 +209,8 @@ Mia Nelson: $20,000
 Wendy Xu: $5,000
 Zach White: $7,000
 Total Raised: $32,000/$22,000 (Goal Met)
-Project: "Handcrafted Wooden Jewelry Boxes"
 
+Project: "Handcrafted Wooden Jewelry Boxes"
 Creator: Emma Ford
 Category: Craft
 Goal: $8,000
@@ -221,8 +221,8 @@ Victor Wong: $1,500
 Noah Owen: $1,500
 Karen Lee: $1,000
 Total Raised: $9,000/$8,000 (Goal Met)
-Project: "Artisan Food Market Pop-Up"
 
+Project: "Artisan Food Market Pop-Up"
 Creator: Alice Brown
 Category: Food
 Goal: $10,000
