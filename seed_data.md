@@ -104,6 +104,23 @@ Zach White
 Email: zach.white@yahoo.com
 Phone: 0456890123
 
+## Categories
+Art
+Comics
+Craft
+Dance
+Design
+Fashion
+Film
+Food
+Games
+Journalism
+Music
+Photography
+Publishing
+Technology 
+Theater
+
 ## Projects and Pledges
 Project: "Sustainable Fashion Line"
 Creator: David Evans
