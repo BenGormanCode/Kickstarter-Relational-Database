@@ -61,32 +61,32 @@ FOREIGN KEY(goals_id) REFERENCES goals(id) ON DELETE CASCADE
 
 -- Table Data
 INSERT INTO users (username, email, phone) VALUES 
-('alice.brown', 'alice.brown@gmail.com', '0401234567'),
-('ben.clark', 'ben.clark@yahoo.com', '0412345678'),
-('carla.davis', 'carla.davis@icloud.com', '0423456789'),
-('david.evans', 'david.evans@outlook.com', '0434567890'),
-('emma.ford', 'emma.ford@gmail.com', '0445678901'),
-('frank.green', 'frank.green@yahoo.com', '0456789012'),
-('grace.hill', 'grace.hill@icloud.com', '0467890123'),
-('harry.ives', 'harry.ives@outlook.com', '0478901234'),
-('isabella.james', 'isabella.james@gmail.com', '0489012345'),
-('jack.king', 'jack.king@yahoo.com', '0490123456'),
-('karen.lee', 'karen.lee@icloud.com', '0402345678'),
-('liam.morgan', 'liam.morgan@outlook.com', '0413456789'),
-('mia.nelson', 'mia.nelson@gmail.com', '0424567890'),
-('noah.owen', 'noah.owen@yahoo.com', '0435678901'),
-('olivia.parker', 'olivia.parker@icloud.com', '0446789012'),
-('paul.quinn', 'paul.quinn@outlook.com', '0457890123'),
-('quincy.roberts', 'quincy.roberts@gmail.com', '0468901234'),
-('rachel.smith', 'rachel.smith@yahoo.com', '0479012345'),
-('sam.taylor', 'sam.taylor@icloud.com', '0480123456'),
-('tina.underwood', 'tina.underwood@outlook.com', '0491234567'),
-('ursula.vasquez', 'ursula.vasquez@gmail.com', '0401345678'),
-('victor.wong', 'victor.wong@yahoo.com', '0412456789'),
-('wendy.xu', 'wendy.xu@icloud.com', '0423567890'),
-('xander.young', 'xander.young@outlook.com', '0434678901'),
-('yara.zimmer', 'yara.zimmer@gmail.com', '0445789012'),
-('zach.white', 'zach.white@yahoo.com', '0456890123');
+('Alice Brown', 'alice.brown@gmail.com', '0401234567'),
+('Ben Clark', 'ben.clark@yahoo.com', '0412345678'),
+('Carla Davis', 'carla.davis@icloud.com', '0423456789'),
+('David Evans', 'david.evans@outlook.com', '0434567890'),
+('Emma Ford', 'emma.ford@gmail.com', '0445678901'),
+('Frank Green', 'frank.green@yahoo.com', '0456789012'),
+('Grace Hill', 'grace.hill@icloud.com', '0467890123'),
+('Harry Ives', 'harry.ives@outlook.com', '0478901234'),
+('Isabella James', 'isabella.james@gmail.com', '0489012345'),
+('Jack Kross', 'jack.king@yahoo.com', '0490123456'),
+('Karen Lee', 'karen.lee@icloud.com', '0402345678'),
+('Liam Morgan', 'liam.morgan@outlook.com', '0413456789'),
+('Mia Nelson', 'mia.nelson@gmail.com', '0424567890'),
+('Noah Owen', 'noah.owen@yahoo.com', '0435678901'),
+('Olivia Parker', 'olivia.parker@icloud.com', '0446789012'),
+('Paul Quinn', 'paul.quinn@outlook.com', '0457890123'),
+('Quincy Roberts', 'quincy.roberts@gmail.com', '0468901234'),
+('Rachel Smith', 'rachel.smith@yahoo.com', '0479012345'),
+('Sam Taylor', 'sam.taylor@icloud.com', '0480123456'),
+('Tina Underwood', 'tina.underwood@outlook.com', '0491234567'),
+('Ursula Vasquez', 'ursula.vasquez@gmail.com', '0401345678'),
+('Victor Wong', 'victor.wong@yahoo.com', '0412456789'),
+('Wendy Xu', 'wendy.xu@icloud.com', '0423567890'),
+('Xander Young', 'xander.young@outlook.com', '0434678901'),
+('Yara Zimmer', 'yara.zimmer@gmail.com', '0445789012'),
+('Zach White', 'zach.white@yahoo.com', '0456890123');
 
 INSERT INTO categories (category_name) VALUES
 ('Art'),
@@ -196,52 +196,74 @@ INSERT INTO project_goals (project_id, goals_id) VALUES
 (9, 9),
 (10, 10);
 
-
--- View Data
--- SELECT * FROM users;
--- SELECT * FROM creators;
--- SELECT * FROM pledges;
--- SELECT * FROM projects;
--- SELECT * FROM project_goals;
--- SELECT * FROM goals;
--- SELECT * FROM categories;
-
-
--- 3 WELL WRITTEN COMPLEX QUERIES THAT INVOLVE SELECTING, FILETERING, GROUPING AND ORDERING
-
--- Highest Spending Users
-SELECT 
-  user_id,
-  SUM(amount) AS total_spend
-FROM 
-  pledges
-GROUP BY 
-  user_id
-ORDER BY 
-  total_spend DESC;
-
--- Number of Projects in Each Category
+-- Number of Projects in Each Category (Select, Filter, Group, Order)
 SELECT 
   categories_id,
   COUNT(*) AS project_count
 FROM 
   projects
+WHERE 
+  categories_id IS NOT NULL
 GROUP BY 
   categories_id
 ORDER BY 
   project_count DESC;
 
--- Total Pledge for Each Project ID
+-- Pledges Over $10,000 (Select, Filter, Group, Order)
 SELECT 
-  project_id,
-  SUM(amount) AS total_pledged
+  user_id,
+  MAX(amount) AS highest_spend
 FROM 
   pledges
 GROUP BY 
-  project_id
+  user_id
+HAVING
+  MAX(amount) > 10000
+ORDER BY 
+  highest_spend DESC;
+
+-- Users with 3+ Pledges (Select, Filter, Group, Order)
+SELECT 
+    user_id,
+    COUNT(*) AS pledge_count
+FROM 
+    pledges
+GROUP BY 
+    user_id
+HAVING 
+    COUNT(*) >= 3  
+ORDER BY 
+    pledge_count DESC;
+
+-- Total Earned by Project (Joins)
+SELECT 
+  projects.title AS project_title,
+  users.username AS creator,
+  SUM(pledges.amount) AS total_pledged
+FROM 
+  projects
+JOIN 
+  pledges ON projects.id = pledges.project_id
+JOIN 
+  creators ON projects.id = creators.project_id 
+JOIN 
+  users ON creators.user_id = users.id 
+GROUP BY 
+  projects.title, users.username
 ORDER BY 
   total_pledged DESC;
 
--- 2 COMPLEX QUERIES THAT JOIN TABLES TOGETHER
-
-
+-- Total Number of Pledges per Category (Joins)
+SELECT 
+    categories.category_name,
+    COUNT(pledges.id) AS total_pledges
+FROM 
+    categories
+INNER JOIN 
+    projects ON categories.id = projects.categories_id
+INNER JOIN 
+    pledges ON projects.id = pledges.project_id
+GROUP BY 
+    categories.category_name
+ORDER BY 
+    total_pledges DESC;
