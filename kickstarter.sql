@@ -1,6 +1,6 @@
--- Drop Users
-DROP TABLE IF EXISTS goals;
+-- Drop Tables
 DROP TABLE IF EXISTS project_goals;
+DROP TABLE IF EXISTS goals CASCADE;
 DROP TABLE IF EXISTS pledges;
 DROP TABLE IF EXISTS creators;
 DROP TABLE IF EXISTS projects;
@@ -172,18 +172,6 @@ INSERT INTO pledges (user_id, project_id, amount) VALUES
 (12, 10, 2500),
 (22, 10, 1000);
 
-INSERT INTO project_goals (project_id, goals_id) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5),
-(6, 6),
-(7, 7),
-(8, 8),
-(9, 9),
-(10, 10);
-
 INSERT INTO goals (goal_name, goal_amount) VALUES
 ('Fashion Line Funding', 30000),
 ('Board Game Beta', 18000),
@@ -196,6 +184,19 @@ INSERT INTO goals (goal_name, goal_amount) VALUES
 ('Basic Boxes', 8000),
 ('Pop Up Market', 10000);
 
+INSERT INTO project_goals (project_id, goals_id) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 8),
+(9, 9),
+(10, 10);
+
+
 -- View Data
 -- SELECT * FROM users;
 -- SELECT * FROM creators;
@@ -206,11 +207,41 @@ INSERT INTO goals (goal_name, goal_amount) VALUES
 -- SELECT * FROM categories;
 
 
--- 3 well written complex queries that involve selecting, filtering, grouping and ordering
+-- 3 WELL WRITTEN COMPLEX QUERIES THAT INVOLVE SELECTING, FILETERING, GROUPING AND ORDERING
 
+-- Highest Spending Users
+SELECT 
+  user_id,
+  SUM(amount) AS total_spend
+FROM 
+  pledges
+GROUP BY 
+  user_id
+ORDER BY 
+  total_spend DESC;
 
--- 2 complex queries which join tables together
+-- Number of Projects in Each Category
+SELECT 
+  categories_id,
+  COUNT(*) AS project_count
+FROM 
+  projects
+GROUP BY 
+  categories_id
+ORDER BY 
+  project_count DESC;
 
+-- Total Pledge for Each Project ID
+SELECT 
+  project_id,
+  SUM(amount) AS total_pledged
+FROM 
+  pledges
+GROUP BY 
+  project_id
+ORDER BY 
+  total_pledged DESC;
 
--- Query that retrieves data and does sum, average, min, max or other
+-- 2 COMPLEX QUERIES THAT JOIN TABLES TOGETHER
+
 
